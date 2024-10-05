@@ -5,6 +5,7 @@ import data from "@/dummyData.json";
 
 import Categories from "@/components/Categories";
 import ListingCard from "./ListingCard";
+import Footer from "./Footer";
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -29,26 +30,17 @@ const HomePage = () => {
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 p-3">
           {listings.length ? (
             listings.map((listing) => (
-              <ListingCard
-                key={listing.id}
-                image={listing.image}
-                title={listing.title}
-                type={listing.type}
-                guests={listing.guests}
-                bedrooms={listing.bedrooms}
-                bathrooms={listing.bathrooms}
-                pricePerNight={listing.pricePerNight}
-                rating={listing.rating}
-              />
+              <ListingCard key={listing.id} {...listing} />
             ))
           ) : (
             <div className="">No listings found</div>
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 };
