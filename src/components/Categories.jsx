@@ -2,22 +2,9 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 
-const categories = [
-  "All",
-  "Cabins",
-  "Trending",
-  "Luxury",
-  "Family",
-  "Pet-Friendly",
-  "Unique Stays",
-  "Budget",
-  "Romantic",
-  "Adventure",
-  "City",
-  "Mountain",
-  "Desert",
-  "Forest",
-];
+import data from "@/dummyData";
+
+const categories = data.categories;
 
 const Categories = ({ selectedCategory, setSelectedCategory }) => {
   return (

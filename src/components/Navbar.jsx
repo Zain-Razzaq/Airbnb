@@ -14,26 +14,29 @@ const Navbar = () => {
     <nav className="bg-white shadow-md p-4">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <div className="text-2xl font-bold">
-          <a href="/" className="text-gray-800">
+        <div className="flex items-center">
+          <a href="/" className="text-gray-800 text-2xl font-bold">
             Logo
           </a>
-        </div>
 
-        {/* Navigation Links */}
-        <div className="hidden md:flex space-x-6">
-          <a href="/" className="text-gray-600 hover:text-gray-800">
-            Home
-          </a>
-          <a href="/experiences" className="text-gray-600 hover:text-gray-800">
-            Experiences
-          </a>
-          <a
-            href="/online-experiences"
-            className="text-gray-600 hover:text-gray-800"
-          >
-            Online Experiences
-          </a>
+          {/* Navigation Links */}
+          <div className="hidden md:flex space-x-6 ml-8">
+            <a href="/" className="text-gray-600 hover:text-gray-800">
+              Home
+            </a>
+            <a
+              href="/experiences"
+              className="text-gray-600 hover:text-gray-800"
+            >
+              Experiences
+            </a>
+            <a
+              href="/online-experiences"
+              className="text-gray-600 hover:text-gray-800"
+            >
+              Online Experiences
+            </a>
+          </div>
         </div>
 
         {/* User Menu */}
