@@ -5,8 +5,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"; // Correct path for dropdown
+} from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import SearchBar from "@/components/SearchBar";
 
 const Navbar = () => {
   return (
@@ -37,6 +38,7 @@ const Navbar = () => {
 
         {/* User Menu */}
         <div className="flex items-center space-x-4">
+          <SearchBar />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar>
