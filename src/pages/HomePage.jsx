@@ -1,11 +1,10 @@
-import React from "react";
 import { useState, useEffect } from "react";
 
 import data from "@/dummyData.json";
 
 import Categories from "@/components/Categories";
-import ListingCard from "./ListingCard";
-import Footer from "./Footer";
+import ListingCard from "../components/ListingCard";
+import Footer from "../components/Footer";
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");

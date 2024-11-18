@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import "./App.css";
 
 import Navbar from "./components/Navbar";
-import HomePage from "./components/HomePage";
+import HomePage from "./pages/HomePage";
+import ListingPage from "./pages/ListingPage";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
+    <BrowserRouter>
       <Navbar />
-      <HomePage />
-    </>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/listing/:id" element={<ListingPage /> } />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
