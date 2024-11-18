@@ -1,10 +1,10 @@
-// src/components/ListingCard.jsx
-import React from "react";
-import { Card } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
 
+import { Card } from "@/components/ui/card";
 import { UserIcon } from "@heroicons/react/24/solid";
 
 const ListingCard = ({
+  id,
   image,
   title,
   type,
@@ -14,11 +14,16 @@ const ListingCard = ({
   pricePerNight,
   rating,
 }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/listing/${id}`);
+  };
   return (
-    <Card className="max-w-sm shadow-sm hover:shadow-lg ">
+    <Card className="max-w-sm shadow-sm hover:shadow-lg " onClick={handleClick}>
       <img
         // src={image}
-        src={`src/assets/img/${image}`}
+        src={`src/${image}`}
         alt={title}
         className="w-full h-48 object-cover rounded-t-md"
       />

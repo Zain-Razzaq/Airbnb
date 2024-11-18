@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import data from "@/dummyData.json";
+import { BASE_API } from "../constant";
 
 import Categories from "@/components/Categories";
 import ListingCard from "../components/ListingCard";
@@ -9,18 +9,36 @@ import Footer from "../components/Footer";
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [listings, setListings] = useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    const list = data.data;
-    console.log(list);
-    if (selectedCategory === "All") {
-      setListings(list);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${BASE_API}/listings`);
+        const fetchedData = await response.json();
+        setData(fetchedData);
+        const initialListings =
+          selectedCategory === "All"
+            ? fetchedData
+            : fetchedData.filter((listing) => listing.category === selectedCategory);
+        setListings(initialListings);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+  
+    if (!data.length) {
+      fetchData();
     } else {
-      setListings(
-        list.filter((listing) => listing.category === selectedCategory)
-      );
+      // Filter the listings based on category for subsequent renders
+      const filteredListings =
+        selectedCategory === "All"
+          ? data
+          : data.filter((listing) => listing.category === selectedCategory);
+      setListings(filteredListings);
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, data]);
+  
 
   return (
     <>

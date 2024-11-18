@@ -55,7 +55,7 @@ const ListingPage = () => {
             <span>{listing.bathrooms} Bathrooms</span>
           </div>
         </div>
-        <p className="text-gray-600 mb-4">{listing.pricePerNight} per night</p>
+        <p className="font-bold">${listing.pricePerNight} per night</p>
         <p className="text-gray-600 mb-4">Rating: {listing.rating} out of 5</p>
         <p className="text-gray-600 mb-4">Category: {listing.category}</p>
 

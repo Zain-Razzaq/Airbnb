@@ -4,19 +4,7 @@ import cors from "cors";
 // Import data from json file
 import dummyData from "./dummyData.json" assert { type: "json" };
 
-// convert data into list of objects
-const data = dummyData.data.map((listing) => ({
-  id: listing.id,
-  image: listing.image,
-  title: listing.title,
-  type: listing.type,
-  guests: listing.guests,
-  bedrooms: listing.bedrooms,
-  bathrooms: listing.bathrooms,
-  pricePerNight: listing.price_per_night,
-  rating: listing.rating,
-  category: listing.category,
-}));
+const data = dummyData.data;
 
 const app = express();
 const port = 3000;
@@ -26,46 +14,6 @@ app.use(express.json());
 
 // Enable CORS for all requests
 app.use(cors());
-
-// Static JSON Data
-const data2 = [
-  {
-    id: 1,
-    image: "1.jpg",
-    title: "Luxury Villa with Ocean View",
-    type: "Entire home",
-    guests: 6,
-    bedrooms: 3,
-    bathrooms: 3,
-    pricePerNight: 250,
-    rating: 4.8,
-    category: "Villas",
-  },
-  {
-    id: 2,
-    image: "2.jpg",
-    title: "Cozy Cottage in the Woods",
-    type: "Entire home",
-    guests: 2,
-    bedrooms: 1,
-    bathrooms: 1,
-    pricePerNight: 100,
-    rating: 4.5,
-    category: "Houses",
-  },
-  {
-    id: 3,
-    image: "src/assets/img/3.jpg",
-    title: "Modern Apartment in the City",
-    type: "Entire home",
-    guests: 4,
-    bedrooms: 2,
-    bathrooms: 2,
-    pricePerNight: 150,
-    rating: 4.7,
-    category: "Apartments",
-  },
-];
 
 // API Endpoints
 
