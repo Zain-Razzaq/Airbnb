@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { BASE_API } from "../constant";
 
@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 
 const ListingPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [listing, setListing] = useState(null);
 
   useEffect(() => {
@@ -59,7 +60,10 @@ const ListingPage = () => {
         <p className="text-gray-600 mb-4">Rating: {listing.rating} out of 5</p>
         <p className="text-gray-600 mb-4">Category: {listing.category}</p>
 
-        <Button className="bg-slate-950 text-white px-4 py-2 rounded-md">
+        <Button
+          className="bg-slate-950 text-white px-4 py-2 rounded-md"
+          onClick={() => navigate(`/booking/${id}`)}
+        >
           Book Now
         </Button>
       </div>
