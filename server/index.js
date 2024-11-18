@@ -47,8 +47,9 @@ app.get("/api/listings/search", (req, res) => {
 });
 
 // 4. Create a booking (mock implementation)
-app.post("/api/bookings", (req, res) => {
+app.post("/api/booking", (req, res) => {
   const booking = req.body; // Expecting booking details in request body
+  console.log(booking);
   res.status(201).send({
     message: "Booking created successfully (mock)",
     booking,
