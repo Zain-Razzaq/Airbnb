@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 
 import authRoutes from "./routes/authRoutes.js";
+import listingRoutes from "./routes/listingRoutes.js";
+import categorieRoutes from "./routes/categorieRoutes.js";
 
 const app = express();
 const port = 3000;
@@ -24,8 +26,20 @@ mongoose.connection.on("connected", () => {
 
 export const connection = null;
 
+
+
+
 // Routes
 app.use("/auth", authRoutes);
+app.use("/listing", listingRoutes);
+app.use("/categorie", categorieRoutes);
+
+
+
+
+
+
+
 
 const PORT = process.env.PORT || 5000;
 // API Endpoints
@@ -37,40 +51,3 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
-
-// 1. Get all listings
-// app.get("/api/listings", (req, res) => {
-//   res.json(data);
-// });
-
-// // 2. Get listing details by ID
-// app.get("/api/listings/:id", (req, res) => {
-//   const id = parseInt(req.params.id);
-//   const listing = data.find((item) => item.id === id);
-//   if (listing) {
-//     res.json(listing);
-//   } else {
-//     res.status(404).send({ error: "Listing not found" });
-//   }
-// });
-
-// // 3. Search functionality (filter by location, using title here as a proxy)
-// app.get("/api/listings/search", (req, res) => {
-//   const query = req.query.query?.toLowerCase() || "";
-//   const results = data.filter((item) =>
-//     item.title.toLowerCase().includes(query)
-//   );
-//   res.json(results);
-// });
-
-// // 4. Create a booking (mock implementation)
-// app.post("/api/booking", (req, res) => {
-//   const booking = req.body; // Expecting booking details in request body
-//   console.log(booking);
-//   res.status(201).send({
-//     message: "Booking created successfully (mock)",
-//     booking,
-//   });
-// });
-
-// Start the server

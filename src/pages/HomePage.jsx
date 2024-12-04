@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { BASE_API } from "../constant";
+import { getAllListings } from "../api/listing";
 
 import Categories from "@/components/Categories";
 import ListingCard from "../components/ListingCard";
@@ -14,19 +14,22 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${BASE_API}/listings`);
-        const fetchedData = await response.json();
+        const response = await getAllListings();
+        console.log(response);
+        const fetchedData = response.data;
         setData(fetchedData);
         const initialListings =
           selectedCategory === "All"
             ? fetchedData
-            : fetchedData.filter((listing) => listing.category === selectedCategory);
+            : fetchedData.filter(
+                (listing) => listing.category === selectedCategory
+              );
         setListings(initialListings);
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
     };
-  
+
     if (!data.length) {
       fetchData();
     } else {
@@ -38,7 +41,6 @@ const HomePage = () => {
       setListings(filteredListings);
     }
   }, [selectedCategory, data]);
-  
 
   return (
     <>
