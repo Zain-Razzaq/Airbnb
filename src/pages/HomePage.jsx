@@ -4,7 +4,6 @@ import { getAllListings } from "../api/listing";
 
 import Categories from "@/components/Categories";
 import ListingCard from "../components/ListingCard";
-import Footer from "../components/Footer";
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -59,7 +58,6 @@ const HomePage = () => {
           )}
         </div>
       </div>
-      <Footer />
     </>
   );
 };

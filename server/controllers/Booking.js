@@ -1,0 +1,50 @@
+// bookingController.js
+
+import {
+  createBookingInDB,
+  getBookingByIdFromDB,
+  getAllBookingsFromDB,
+} from "../database/bookingData.js";
+
+// Create a new booking
+export const createBooking = async (req, res) => {
+  try {
+    const { listing, guest, startDate, endDate, totalPrice, status } = req.body;
+
+    const newBooking = await createBookingInDB({
+      listing,
+      guest,
+      startDate,
+      endDate,
+      totalPrice,
+      status,
+    });
+
+    res.status(201).json(newBooking);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Get a single booking by ID
+export const getBookingById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const booking = await getBookingByIdFromDB(id);
+
+    res.status(200).json(booking);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+// Get all bookings
+export const getAllBookings = async (req, res) => {
+  try {
+    const bookings = await getAllBookingsFromDB();
+
+    res.status(200).json(bookings);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

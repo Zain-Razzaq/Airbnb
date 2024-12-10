@@ -10,7 +10,6 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
     const fetchCategories = async () => {
       try {
         const response = await getAllCategories();
-        console.log(response);
         setCategories(response.data);
       } catch (error) {
         console.error("Failed to fetch categories:", error);

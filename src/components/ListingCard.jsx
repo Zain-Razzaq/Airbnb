@@ -4,20 +4,19 @@ import { Card } from "@/components/ui/card";
 import { UserIcon } from "@heroicons/react/24/solid";
 
 const ListingCard = ({
-  id,
+  _id,
   image,
   title,
   type,
-  guests,
-  bedrooms,
-  bathrooms,
-  pricePerNight,
+  capacity,
+  location,
+  price,
   rating,
 }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/listing/${id}`);
+    navigate(`/listing/${_id}`);
   };
   return (
     <Card className="max-w-sm shadow-sm hover:shadow-lg " onClick={handleClick}>
@@ -33,18 +32,15 @@ const ListingCard = ({
         <div className="flex items-center space-x-4 mb-4">
           <div className="flex items-center space-x-1">
             <UserIcon className="h-5 w-5 text-gray-500" />
-            <span>{guests} Guests</span>
+            <span>{capacity} Guests</span>
           </div>
           <div className="flex items-center space-x-1">
-            <span>{bedrooms} Bedrooms</span>
-          </div>
-          <div className="flex items-center space-x-1">
-            <span>{bathrooms} Bathrooms</span>
+            <span>{location}</span>
           </div>
         </div>
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-lg font-bold">${pricePerNight} / night</p>
+            <p className="text-lg font-bold">${price} / night</p>
             <p className="text-sm text-gray-500">Includes taxes and fees</p>
           </div>
           <div>

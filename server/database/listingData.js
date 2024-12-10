@@ -20,8 +20,21 @@ export async function addListinginDB(listingData) {
 
     return savedListing; // Return the saved listing document
   } catch (error) {
-    console.error('Error adding listing:', error);
+    console.error("Error adding listing:", error);
     throw error;
   }
 }
 
+export const getListingByIdFromDB = async (id) => {
+  try {
+    const listing = await ListingModel.findById(id)
+      .populate("categories")
+      .populate("host")
+    //   .populate("bookings")
+      .exec();
+    return listing;
+  } catch (error) {
+    console.error("Error fetching listing details:", error);
+    throw error;
+  }
+};

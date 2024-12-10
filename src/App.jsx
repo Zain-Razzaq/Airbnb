@@ -3,6 +3,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/auth/LoginPage";
@@ -29,6 +30,7 @@ function App() {
         <Route path={Listing_URL} element={<ListingPage />} />
         <Route path={BOOKING_URL} element={<BookingPage />} />
       </Routes>
+      <Footer />
       <Toaster />
     </BrowserRouter>
   );

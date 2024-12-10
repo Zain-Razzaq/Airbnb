@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import authRoutes from "./routes/authRoutes.js";
 import listingRoutes from "./routes/listingRoutes.js";
 import categorieRoutes from "./routes/categorieRoutes.js";
+import bookingRoutes from "./routes/bookingRoutes.js";
 
 const app = express();
 const port = 3000;
@@ -26,20 +27,11 @@ mongoose.connection.on("connected", () => {
 
 export const connection = null;
 
-
-
-
 // Routes
 app.use("/auth", authRoutes);
 app.use("/listing", listingRoutes);
 app.use("/categorie", categorieRoutes);
-
-
-
-
-
-
-
+app.use("/booking", bookingRoutes);
 
 const PORT = process.env.PORT || 5000;
 // API Endpoints
