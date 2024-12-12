@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-import { BASE_API } from "../constant";
 import { getListingDetailsbyId } from "../api/listing";
 
 import { Button } from "@/components/ui/button";

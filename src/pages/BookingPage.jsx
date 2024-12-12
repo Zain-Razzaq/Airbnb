@@ -4,7 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
-import { BASE_API } from "../constant";
+import { getListingDetailsbyId } from "../api/listing";
+
+import { newBooking } from "../api/booking.js";
 
 const BookingPage = () => {
   const { id } = useParams();
@@ -16,22 +18,15 @@ const BookingPage = () => {
   const [error, setError] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
 
-  // Personal Info State
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [personalError, setPersonalError] = useState("");
-
   const { toast } = useToast();
 
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const response = await fetch(`${BASE_API}/listings/${id}`);
-        const data = await response.json();
-        setProperty(data);
+        const response = await getListingDetailsbyId(id);
+        setProperty(response.data);
       } catch (error) {
-        console.error("Failed to fetch property:", error);
+        console.error("Error fetching listing details:", error);
       }
     };
 
@@ -54,41 +49,20 @@ const BookingPage = () => {
     }
 
     const days = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24);
-    setTotalPrice(days * property.pricePerNight);
+    setTotalPrice(days * property.price);
     setError("");
   };
 
-  const handlePersonalInfoSubmit = (e) => {
+  const handleConfirmBooking = async (e) => {
     e.preventDefault();
-    if (!name || !phone || !email) {
-      setPersonalError("All fields are required.");
-      return;
-    }
-
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
-      setPersonalError("Please enter a valid email address.");
-      return;
-    }
-
-    if (!/^\d{11}$/.test(phone)) {
-      setPersonalError("Phone number must be 11 digits.");
-      return;
-    }
-    setPersonalError("");
-
+    console.log("Booking");
     // send a post to server
     try {
-      fetch(BASE_API + "/booking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          phone,
-          email,
-          totalPrice,
-        }),
+      await newBooking({
+        listingId: id,
+        checkIn,
+        checkOut,
+        totalPrice,
       }).then(() => {
         toast({
           title: "Booking Successfull",
@@ -101,7 +75,7 @@ const BookingPage = () => {
     } catch (error) {
       toast({
         title: "Error Occurred",
-        description: "Failed to confirm booking. Please try again later.",
+        description: error,
         type: "error",
       });
     }
@@ -114,9 +88,9 @@ const BookingPage = () => {
       <h1 className="text-2xl font-bold text-gray-400 mb-4">
         Book Your Stay at <p className="text-gray-800">{property.title}</p>
       </h1>
+      <p className="text-gray-600 mb-4">{property.description}</p>
       <p className="text-lg text-gray-600 mb-2">
-        Price per night:{" "}
-        <span className="font-semibold">${property.pricePerNight}</span>
+        Price per day: <span className="font-semibold">${property.price}</span>
       </p>
 
       {/* Booking Form */}
@@ -173,54 +147,9 @@ const BookingPage = () => {
       {/* Personal Info Form */}
       {totalPrice > 0 && (
         <form
-          onSubmit={handlePersonalInfoSubmit}
+          onSubmit={handleConfirmBooking}
           className="mt-6 space-y-4 p-4 bg-white shadow rounded-md"
         >
-          <h2 className="text-lg font-semibold text-gray-800">Your Details</h2>
-
-          <div>
-            <label htmlFor="name" className="block text-gray-700 font-medium">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="phone" className="block text-gray-700 font-medium">
-              Phone Number
-            </label>
-            <input
-              type="text"
-              id="phone"
-              className="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="email" className="block text-gray-700 font-medium">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-
-          {personalError && (
-            <p className="text-red-500 text-sm">{personalError}</p>
-          )}
-
           <div className="w-full md:w-auto">
             <Button type="submit" className="w-full">
               Confirm Booking

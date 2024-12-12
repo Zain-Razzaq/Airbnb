@@ -7,3 +7,5 @@ export const ALL_LISTINGS_API_URL = "/listing/all";
 export const getListingDetailsApiURL = (id) => `/listing/${id}`;
 
 export const ALL_CATEGORIES_API_URL = "/categorie/all";
+
+export const CONFIRM_BOOKING_API_URL = "/booking/new";

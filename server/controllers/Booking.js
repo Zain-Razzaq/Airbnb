@@ -9,15 +9,14 @@ import {
 // Create a new booking
 export const createBooking = async (req, res) => {
   try {
-    const { listing, guest, startDate, endDate, totalPrice, status } = req.body;
+    const { listingId, userId, startDate, endDate, totalPrice } = req.body;
 
     const newBooking = await createBookingInDB({
-      listing,
-      guest,
+      listingId,
+      userId,
       startDate,
       endDate,
       totalPrice,
-      status,
     });
 
     res.status(201).json(newBooking);

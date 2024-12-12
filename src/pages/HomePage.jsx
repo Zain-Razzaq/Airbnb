@@ -14,7 +14,6 @@ const HomePage = () => {
     const fetchData = async () => {
       try {
         const response = await getAllListings();
-        console.log(response);
         const fetchedData = response.data;
         setData(fetchedData);
         const initialListings =

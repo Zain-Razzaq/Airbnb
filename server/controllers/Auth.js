@@ -65,7 +65,7 @@ export const register = async (req, res) => {
       userId: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.role === "admin",
+      role: user.role,
     });
   } catch (error) {
     res.status(500).send({ message: error.message });
@@ -114,12 +114,12 @@ export const login = async (req, res) => {
       sameSite: "None",
       secure: true,
     });
-    
+
     res.status(200).json({
       userId: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.role === "admin",
+      role: user.role,
     });
   } catch (error) {
     res.status(500).send({ message: error.message });

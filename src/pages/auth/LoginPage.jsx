@@ -1,20 +1,35 @@
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { userLogin } from "../../api/auth";
 
 const LoginPage = () => {
-  const handelSubmit = (e) => {
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
+  const handelSubmit = async (e) => {
     e.preventDefault();
     const userData = {
       email: e.target.email.value,
       password: e.target.password.value,
     };
-    console.log(userData);
-
-    // send api request to login user
-    const x = userLogin(userData);
-    console.log(x);
+    try {
+      // send api request to login user
+      const x = await userLogin(userData);
+      // set in localStorage
+      localStorage.setItem("user", JSON.stringify(x.data));
+      navigate("/");
+    } catch (error) {
+      console.error("Error logging in user:", error);
+      toast({
+        title: "Error Occurred",
+        description: error.message,
+        type: "error",
+      });
+    }
   };
 
   return (

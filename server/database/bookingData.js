@@ -49,8 +49,8 @@ export const createBookingInDB = async (bookingData) => {
   try {
     // Create a new booking with the provided data
     const newBooking = new BookingModel({
-      listing: bookingData.listing,
-      guest: bookingData.guest,
+      listing: bookingData.listingId,
+      guest: bookingData.userId,
       startDate: bookingData.startDate,
       endDate: bookingData.endDate,
       totalPrice: bookingData.totalPrice,
