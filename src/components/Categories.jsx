@@ -25,7 +25,9 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
         <Button
           variant="outline"
           onClick={() => setSelectedCategory("All")}
-          className="whitespace-nowrap"
+          className={`whitespace-nowrap ${
+            selectedCategory == "All" && "bg-slate-300"
+          }`}
         >
           All
         </Button>
@@ -33,8 +35,10 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
           <Button
             key={category._id}
             variant={selectedCategory === category ? "" : "outline"}
-            onClick={() => setSelectedCategory(category)}
-            className="whitespace-nowrap"
+            onClick={() => setSelectedCategory(category._id)}
+            className={`whitespace-nowrap ${
+              selectedCategory === category._id && "bg-slate-400"
+            }`}
           >
             {category.name}
           </Button>

@@ -36,7 +36,7 @@ const ListingPage = () => {
     <div className="flex justify-center m-8">
       <div>
         <img
-          src={`../src/${listing.image}`}
+          src={listing.image}
           alt={listing.title}
           className="w-full h-80 object-cover rounded-md"
         />

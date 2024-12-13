@@ -10,35 +10,33 @@ const HomePage = () => {
   const [listings, setListings] = useState([]);
   const [data, setData] = useState([]);
 
+  // Fetch data on initial render
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getAllListings();
         const fetchedData = response.data;
         setData(fetchedData);
-        const initialListings =
-          selectedCategory === "All"
-            ? fetchedData
-            : fetchedData.filter(
-                (listing) => listing.category === selectedCategory
-              );
-        setListings(initialListings);
+        setListings(fetchedData); // Initially set all listings
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
     };
 
-    if (!data.length) {
-      fetchData();
+    fetchData();
+  }, []); // Only run on initial render
+
+  // Filter listings when the selected category changes
+  useEffect(() => {
+    if (selectedCategory === "All") {
+      setListings(data);
     } else {
-      // Filter the listings based on category for subsequent renders
-      const filteredListings =
-        selectedCategory === "All"
-          ? data
-          : data.filter((listing) => listing.category === selectedCategory);
+      const filteredListings = data.filter(
+        (listing) => listing.category === selectedCategory
+      );
       setListings(filteredListings);
     }
-  }, [selectedCategory, data]);
+  }, [selectedCategory, data]); // Re-run filtering when category or data changes
 
   return (
     <>
@@ -60,4 +58,5 @@ const HomePage = () => {
     </>
   );
 };
+
 export default HomePage;

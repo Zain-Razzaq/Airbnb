@@ -22,7 +22,7 @@ const ListingCard = ({
     <Card className="max-w-sm shadow-sm hover:shadow-lg " onClick={handleClick}>
       <img
         // src={image}
-        src={`src/${image}`}
+        src={image}
         alt={title}
         className="w-full h-48 object-cover rounded-t-md"
       />

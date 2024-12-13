@@ -2,6 +2,7 @@ import {
   fetchAllListings,
   addListinginDB,
   getListingByIdFromDB,
+  deleteListingByIdFromDB,
 } from "../database/listingData.js";
 
 export const getAllListings = async (req, res) => {
@@ -15,7 +16,8 @@ export const getAllListings = async (req, res) => {
 
 export const addListing = async (req, res) => {
   try {
-    const listingData = req.body; // Extract the listing data from the request body
+    const listingData = req.body;
+    console.log(listingData);
     const listing = addListinginDB(listingData);
 
     // Send a response with the saved listing
@@ -37,7 +39,7 @@ export const getListingById = async (req, res) => {
     const { id } = req.params;
 
     // Fetch the listing by its ID and populate related fields
-      const listing = await getListingByIdFromDB(id);
+    const listing = await getListingByIdFromDB(id);
 
     if (!listing) {
       return res.status(404).json({ message: "Listing not found" });
@@ -50,6 +52,29 @@ export const getListingById = async (req, res) => {
     return res.status(500).json({
       message: "Error fetching listing details",
       error: error.message,
+    });
+  }
+};
+
+export const deleteListingById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedListing = await deleteListingByIdFromDB(id);
+
+    if (!deletedListing) {
+      return res.status(404).json({ message: "Listing not found" });
+    }
+
+    // Return the deleted listing in the response
+    return res.status(200).json({
+      message: "Listing deleted successfully",
+      listing: deletedListing,
+    });
+  } catch (e) {
+    console.error("Error deleting listing:", e);
+    return res.status(500).json({
+      message: "Error deleting listing",
+      error: e.message,
     });
   }
 };

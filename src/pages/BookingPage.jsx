@@ -55,7 +55,6 @@ const BookingPage = () => {
 
   const handleConfirmBooking = async (e) => {
     e.preventDefault();
-    console.log("Booking");
     // send a post to server
     try {
       await newBooking({
@@ -75,7 +74,7 @@ const BookingPage = () => {
     } catch (error) {
       toast({
         title: "Error Occurred",
-        description: error,
+        description: error.message,
         type: "error",
       });
     }

@@ -4,6 +4,7 @@ import {
   createBookingInDB,
   getBookingByIdFromDB,
   getAllBookingsFromDB,
+  deleteBookingByIdFromDB,
 } from "../database/bookingData.js";
 
 // Create a new booking
@@ -45,5 +46,22 @@ export const getAllBookings = async (req, res) => {
     res.status(200).json(bookings);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+export const deleteBookingById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedBooking = await deleteBookingByIdFromDB(id);
+    if (!deletedBooking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    res.status(200).json({
+      message: "Booking deleted successfully",
+      booking: deletedBooking,
+    });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
   }
 };

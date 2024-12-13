@@ -10,6 +10,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import SignupPage from "./pages/auth/SignupPage";
 import ListingPage from "./pages/ListingPage";
 import BookingPage from "./pages/BookingPage";
+import AdminPage from "./pages/AdminPage";
 
 import {
   ROOT_URL,
@@ -17,6 +18,7 @@ import {
   SIGNUP_URL,
   Listing_URL,
   BOOKING_URL,
+  ADMIN_URL,
 } from "./routes";
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
         <Route path={SIGNUP_URL} element={<SignupPage />} />
         <Route path={Listing_URL} element={<ListingPage />} />
         <Route path={BOOKING_URL} element={<BookingPage />} />
+        <Route path={ADMIN_URL} element={<AdminPage />} />
       </Routes>
       <Footer />
       <Toaster />

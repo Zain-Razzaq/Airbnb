@@ -32,7 +32,7 @@ export const register = async (req, res) => {
 
     // Create token
     const JWTToken = jwt.sign(
-      { id: user.id, isAdmin: user.role === "admin" },
+      { id: user.id, role: user.role },
       process.env.JWT_SECRET,
       {
         expiresIn: "20m",
@@ -40,7 +40,7 @@ export const register = async (req, res) => {
     );
 
     const refreshToken = jwt.sign(
-      { id: user.id, isAdmin: user.role === "admin" },
+      { id: user.id, role: user.role },
       process.env.JWT_SECRET,
       {
         expiresIn: "24h",
@@ -87,7 +87,7 @@ export const login = async (req, res) => {
 
     // Create token
     const JWTToken = jwt.sign(
-      { id: user.id, isAdmin: user.role === "admin" },
+      { id: user.id, role: user.role },
       process.env.JWT_SECRET,
       {
         expiresIn: "20m",
@@ -95,7 +95,7 @@ export const login = async (req, res) => {
     );
 
     const refreshToken = jwt.sign(
-      { id: user.id, isAdmin: user.role === "admin" },
+      { id: user.id, role: user.role },
       process.env.JWT_SECRET,
       {
         expiresIn: "24h",

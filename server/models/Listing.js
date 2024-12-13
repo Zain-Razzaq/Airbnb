@@ -6,7 +6,7 @@ const listingSchema = mongoose.Schema(
     description: { type: String, required: true },
     location: { type: String, required: true },
     price: { type: Number, required: true },
-    images: [{ type: String }],
+    image: [{ type: String }],
     availableFrom: { type: Date, required: true },
     availableTo: { type: Date, required: true },
     capacity: { type: Number, required: true },
@@ -17,13 +17,12 @@ const listingSchema = mongoose.Schema(
     updatedAt: { type: Date, default: Date.now },
     status: {
       type: String,
-      enum: ["available", "unavailable", "pending"],
+      enum: ["available", "unavailable"],
       default: "available",
     },
     rating: { type: Number, default: 5 },
-    categories: { type: mongoose.Schema.Types.ObjectId, ref: "categories" },
-    host: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
-    bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: "booking" }],
+    category: { type: mongoose.Schema.Types.ObjectId, ref: "categories" },
+    hostId: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
   },
   { timestamps: true }
 );

@@ -71,3 +71,20 @@ export const createBookingInDB = async (bookingData) => {
     };
   }
 };
+
+export const deleteBookingByIdFromDB = async (id) => {
+  try {
+    const deletedBooking = await BookingModel.findByIdAndDelete(id);
+    if (!deletedBooking) {
+      return { success: false, message: "Booking not found" };
+    }
+    return { success: true, data: deletedBooking };
+  } catch (error) {
+    console.error("Error deleting booking:", error);
+    return {
+      success: false,
+      message: "Error deleting booking",
+      error: error.message,
+    };
+  }
+};

@@ -28,13 +28,23 @@ export async function addListinginDB(listingData) {
 export const getListingByIdFromDB = async (id) => {
   try {
     const listing = await ListingModel.findById(id)
-      .populate("categories")
-      .populate("host")
-    //   .populate("bookings")
+      .populate("category")
+      .populate("hostId")
+      //   .populate("bookings")
       .exec();
     return listing;
   } catch (error) {
     console.error("Error fetching listing details:", error);
+    throw error;
+  }
+};
+
+export const deleteListingByIdFromDB = async (id) => {
+  try {
+    const deletedListing = await ListingModel.findByIdAndDelete(id);
+    return deletedListing;
+  } catch (error) {
+    console.error("Error deleting listing:", error);
     throw error;
   }
 };
