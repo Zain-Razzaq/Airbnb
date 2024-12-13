@@ -45,6 +45,28 @@ export const getAllBookingsFromDB = async () => {
   }
 };
 
+export const getBookingsOfSpecificUserFromDB = async (id) => {
+  try {
+    // Fetch all bookings of a specific user and populate related data (listing and guest)
+    const bookings = await getAllBookingsFromDB();
+
+    // Filter the bookings to only include those where the guest ID matches the provided user ID
+    const userBookings = bookings.data.filter(
+      (booking) => booking.listing.hostId.toString() === id
+    );
+
+    // Return the list of bookings for the specific user
+    return { success: true, data: userBookings };
+  } catch (error) {
+    console.error("Error fetching bookings of specific user:", error);
+    return {
+      success: false,
+      message: "Error fetching bookings of specific user",
+      error: error.message,
+    };
+  }
+};
+
 export const createBookingInDB = async (bookingData) => {
   try {
     // Create a new booking with the provided data

@@ -11,7 +11,6 @@ import SearchBar from "@/components/SearchBar";
 
 const Navbar = () => {
   const userRole = JSON.parse(localStorage.getItem("user")).role;
-  console.log("userRole: " + userRole);
 
   return (
     <nav className="bg-white shadow-md p-4">
@@ -41,7 +40,7 @@ const Navbar = () => {
             </a>
             {
               // Admin-specific links
-              userRole == "admin" && (
+              (userRole == "admin" || userRole == "host") && (
                 <a href="/admin" className="text-gray-600 hover:text-gray-800">
                   Admin Dashboard
                 </a>

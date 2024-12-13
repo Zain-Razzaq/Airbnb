@@ -5,6 +5,7 @@ import {
   getBookingByIdFromDB,
   getAllBookingsFromDB,
   deleteBookingByIdFromDB,
+  getBookingsOfSpecificUserFromDB,
 } from "../database/bookingData.js";
 
 import {
@@ -57,6 +58,20 @@ export const getAllBookings = async (req, res) => {
       return res.status(403).send({ message: "You must be an administrator" });
     }
     const bookings = await getAllBookingsFromDB();
+    res.status(200).json(bookings);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getBookingsOfSpecificUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = validateUser(req, res);
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized access" });
+    }
+    const bookings = await getBookingsOfSpecificUserFromDB(id);
     res.status(200).json(bookings);
   } catch (error) {
     res.status(500).json({ message: error.message });

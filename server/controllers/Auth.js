@@ -8,7 +8,7 @@ dotenv.config();
 // Register
 export const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, host } = req.body;
 
     // Check if the user exists
     const oldUser = await findUser(email);
@@ -22,6 +22,7 @@ export const register = async (req, res) => {
       name,
       email,
       hashedPassword: encryptedPassword,
+      role: host ? "host" : "user",
     };
 
     // Save user in the database

@@ -7,6 +7,7 @@ import { registerNewUser } from "../../api/auth";
 
 const LoginPage = () => {
   const { toast } = useToast();
+
   const handelSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -14,8 +15,10 @@ const LoginPage = () => {
         name: e.target.name.value,
         email: e.target.email.value,
         password: e.target.password.value,
+        host: e.target.host.checked,
       };
-      // send api request to register user
+
+      // Send API request to register user
       const x = await registerNewUser(userData);
       if (x) {
         toast({
@@ -34,7 +37,7 @@ const LoginPage = () => {
       console.log(e);
       toast({
         title: "Error",
-        description: e.response.data.message,
+        description: e.response?.data?.message || "An error occurred",
         type: "error",
       });
     }
@@ -53,6 +56,17 @@ const LoginPage = () => {
             placeholder="Password"
             required
           />
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="host"
+              name="host"
+              className="form-checkbox h-5 w-5"
+            />
+            <label htmlFor="host" className="text-sm">
+              Register as a host
+            </label>
+          </div>
           <Button className="w-full">Register Now</Button>
         </form>
       </div>

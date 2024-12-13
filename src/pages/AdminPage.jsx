@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { getAllListings } from "../api/listing";
-import { fetchAllBookings } from "../api/booking";
+import { fetchAllBookings, getBookingsOfSpecificUser } from "../api/booking";
 
 import ListingDataTable from "../components/ListingDataTable";
 import BookingDataTable from "../components/BookingDataTable";
@@ -14,14 +14,14 @@ const AdminPage = () => {
   const [listing, setListing] = useState([]);
   const [booking, setBooking] = useState([]);
 
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     // Load user data from localStorage
     try {
-      const storedUser = JSON.parse(localStorage.getItem("user"));
-
       if (storedUser) {
         // Check if the user has admin privileges
-        if (storedUser.role === "admin") {
+        if (storedUser.role === "admin" || storedUser.role === "host") {
           setUser(storedUser);
         } else {
           setError("You do not have permission to access this page.");
@@ -38,26 +38,49 @@ const AdminPage = () => {
 
   // fetch the listing and bookings data from the server
   useEffect(() => {
-    const fetchListing = async () => {
-      try {
-        const response = await getAllListings();
-        setListing(response.data);
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      }
-    };
+    if (storedUser.role == "admin") {
+      const fetchListing = async () => {
+        try {
+          const response = await getAllListings();
+          setListing(response.data);
+        } catch (error) {
+          console.error("Failed to fetch data:", error);
+        }
+      };
 
-    const fetchBookings = async () => {
-      try {
-        const response = await fetchAllBookings();
-        setBooking(response.data.data);
-      } catch (err) {
-        console.error("Failed to fetch bookings:", err);
-      }
-    };
+      const fetchBookings = async () => {
+        try {
+          const response = await fetchAllBookings();
+          setBooking(response.data.data);
+        } catch (err) {
+          console.error("Failed to fetch bookings:", err);
+        }
+      };
 
-    fetchListing();
-    fetchBookings();
+      fetchListing();
+      fetchBookings();
+    } else if (storedUser.role == "host") {
+      console.log("Fetching bookings");
+      const fetchListing = async () => {
+        try {
+          const response = await getAllListings();
+          setListing(response.data);
+        } catch (error) {
+          console.error("Failed to fetch data:", error);
+        }
+      };
+      const fetchBookings = async () => {
+        try {
+          const response = await getBookingsOfSpecificUser(storedUser.userId);
+          setBooking(response.data.data);
+        } catch (err) {
+          console.error("Failed to fetch bookings:", err);
+        }
+      };
+
+      fetchListing();
+      fetchBookings();
+    }
   }, []);
 
   if (loading) {

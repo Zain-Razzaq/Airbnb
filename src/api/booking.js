@@ -8,6 +8,7 @@ import {
   CONFIRM_BOOKING_API_URL,
   GET_ALL_BOOKINGS_API_URL,
   getDeleteBookingDetailsApiURL,
+  getBookingsOfSpecificUserApiURL,
 } from "../apiEndpoints";
 
 export const newBooking = async ({
@@ -35,5 +36,11 @@ export const fetchAllBookings = async () => {
 };
 
 export const deleteBookingById = async (bookingId) => {
-  return await axios.delete(BASE_API_URL + getDeleteBookingDetailsApiURL(bookingId));
+  return await axios.delete(
+    BASE_API_URL + getDeleteBookingDetailsApiURL(bookingId)
+  );
+};
+
+export const getBookingsOfSpecificUser = async (id) => {
+  return await axios.get(BASE_API_URL + getBookingsOfSpecificUserApiURL(id));
 };
