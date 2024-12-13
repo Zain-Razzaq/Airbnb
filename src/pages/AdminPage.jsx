@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getAllListings } from "../api/listing";
+import { getAllListings, getListingsOfSpecificUser } from "../api/listing";
 import { fetchAllBookings, getBookingsOfSpecificUser } from "../api/booking";
 
 import ListingDataTable from "../components/ListingDataTable";
@@ -38,49 +38,36 @@ const AdminPage = () => {
 
   // fetch the listing and bookings data from the server
   useEffect(() => {
-    if (storedUser.role == "admin") {
-      const fetchListing = async () => {
-        try {
-          const response = await getAllListings();
-          setListing(response.data);
-        } catch (error) {
-          console.error("Failed to fetch data:", error);
+    const fetchListing = async () => {
+      try {
+        let response = null;
+        if (storedUser.role == "admin") {
+          response = await getAllListings();
+        } else if (storedUser.role == "host") {
+          response = await getListingsOfSpecificUser(storedUser.userId);
         }
-      };
+        setListing(response.data);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
 
-      const fetchBookings = async () => {
-        try {
-          const response = await fetchAllBookings();
-          setBooking(response.data.data);
-        } catch (err) {
-          console.error("Failed to fetch bookings:", err);
+    const fetchBookings = async () => {
+      try {
+        let response = null;
+        if (storedUser.role == "admin") {
+          response = await fetchAllBookings();
+        } else if (storedUser.role == "host") {
+          response = await getBookingsOfSpecificUser(storedUser.userId);
         }
-      };
+        setBooking(response.data.data);
+      } catch (err) {
+        console.error("Failed to fetch bookings:", err);
+      }
+    };
 
-      fetchListing();
-      fetchBookings();
-    } else if (storedUser.role == "host") {
-      console.log("Fetching bookings");
-      const fetchListing = async () => {
-        try {
-          const response = await getAllListings();
-          setListing(response.data);
-        } catch (error) {
-          console.error("Failed to fetch data:", error);
-        }
-      };
-      const fetchBookings = async () => {
-        try {
-          const response = await getBookingsOfSpecificUser(storedUser.userId);
-          setBooking(response.data.data);
-        } catch (err) {
-          console.error("Failed to fetch bookings:", err);
-        }
-      };
-
-      fetchListing();
-      fetchBookings();
-    }
+    fetchListing();
+    fetchBookings();
   }, []);
 
   if (loading) {

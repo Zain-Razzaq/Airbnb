@@ -1,6 +1,6 @@
 import ListingModel from "../models/Listing.js";
 
-export async function fetchAllListings() {
+export const fetchAllListings = async () => {
   try {
     const listings = await ListingModel.find();
     return listings;
@@ -8,7 +8,17 @@ export async function fetchAllListings() {
     console.error("Error fetching listings:", error);
     throw error;
   }
-}
+};
+
+export const getListingsOfSpecificUserFromDB = async (id) => {
+  try {
+    const listings = await ListingModel.find({ hostId: id });
+    return listings;
+  } catch (error) {
+    console.error("Error fetching listings of specific user:", error);
+    throw error;
+  }
+};
 
 export async function addListinginDB(listingData) {
   try {

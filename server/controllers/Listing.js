@@ -3,6 +3,7 @@ import {
   addListinginDB,
   getListingByIdFromDB,
   deleteListingByIdFromDB,
+  getListingsOfSpecificUserFromDB,
 } from "../database/listingData.js";
 
 import { validateAdminToken, validateHost } from "./userTokenValidation.js";
@@ -13,6 +14,23 @@ export const getAllListings = async (req, res) => {
     res.status(200).json(listings);
   } catch (error) {
     res.status(500).send({ message: error.message });
+  }
+};
+
+export const getListingsOfSpecificUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = validateHost(req, res);
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized access" });
+    }
+
+    const listings = await getListingsOfSpecificUserFromDB(id);
+
+    res.status(200).json(listings);
+  } catch (error) {
+    console.error("Error fetching listings of specific user:", error);
+    res.status(500).json({ message: error.message });
   }
 };
 

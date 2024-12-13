@@ -10,6 +10,7 @@ export const ALL_LISTINGS_API_URL = "/listing/all";
 export const NEW_LISTINGS_API_URL = "/listing/add";
 export const getListingDetailsApiURL = (id) => `/listing/${id}`;
 export const getDeleteListingDetailsApiURL = (id) => `/listing/delete/${id}`;
+export const getListingsOfSpecificUserApiURL = (id) => `/listing/user/${id}`;
 
 // category
 export const ALL_CATEGORIES_API_URL = "/categorie/all";

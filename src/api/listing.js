@@ -6,6 +6,7 @@ import {
   getListingDetailsApiURL,
   getDeleteListingDetailsApiURL,
   NEW_LISTINGS_API_URL,
+  getListingsOfSpecificUserApiURL,
 } from "../apiEndpoints";
 
 axios.defaults.withCredentials = true;
@@ -25,4 +26,8 @@ export const deleteListingById = (id) => {
 
 export const addNewListing = (listingData) => {
   return axios.post(`${BASE_API_URL}${NEW_LISTINGS_API_URL}`, listingData);
+};
+
+export const getListingsOfSpecificUser = (id) => {
+  return axios.get(`${BASE_API_URL}${getListingsOfSpecificUserApiURL(id)}`);
 };
