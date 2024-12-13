@@ -5,6 +5,8 @@ import {
   deleteListingByIdFromDB,
 } from "../database/listingData.js";
 
+import { validateAdminToken, validateHost } from "./userTokenValidation.js";
+
 export const getAllListings = async (req, res) => {
   try {
     const listings = await fetchAllListings();
@@ -16,8 +18,12 @@ export const getAllListings = async (req, res) => {
 
 export const addListing = async (req, res) => {
   try {
+    // Check if the user is authenticated and has the required role
+    const host = validateHost(req, res) || validateAdminToken(req, res);
+    if (!host) {
+      return res.status(401).json({ message: "Unauthorized access" });
+    }
     const listingData = req.body;
-    console.log(listingData);
     const listing = addListinginDB(listingData);
 
     // Send a response with the saved listing
@@ -59,6 +65,26 @@ export const getListingById = async (req, res) => {
 export const deleteListingById = async (req, res) => {
   try {
     const { id } = req.params;
+
+    // Check if the user is authenticated and has the required role
+    const host = validateAdminToken(req, res);
+
+    // if not admin
+    if (!host) {
+      const host = validateHost(req, res);
+      if (!host) {
+        return res.status(401).json({ message: "Unauthorized access" });
+      }
+      const listing = await getListingByIdFromDB();
+      if (!listing) {
+        return res.status(404).json({ message: "Listing not found" });
+      }
+      // Only allow deletion if the listing belongs to the authenticated user
+      if (listing.hostId.toString() !== host.id.toString()) {
+        return res.status(403).json({ message: "Forbidden access" });
+      }
+    }
+
     const deletedListing = await deleteListingByIdFromDB(id);
 
     if (!deletedListing) {

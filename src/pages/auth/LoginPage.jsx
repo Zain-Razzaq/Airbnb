@@ -19,14 +19,20 @@ const LoginPage = () => {
     try {
       // send api request to login user
       const x = await userLogin(userData);
-      // set in localStorage
-      localStorage.setItem("user", JSON.stringify(x.data));
-      navigate("/");
-    } catch (error) {
-      console.error("Error logging in user:", error);
+      if (x) {
+        localStorage.setItem("user", JSON.stringify(x.data));
+        navigate("/");
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to login user",
+          type: "error",
+        });
+      }
+    } catch (e) {
       toast({
         title: "Error Occurred",
-        description: error.message,
+        description: e.response.data.message,
         type: "error",
       });
     }

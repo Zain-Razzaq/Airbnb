@@ -16,7 +16,12 @@ dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 // Enable CORS for all requests
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", 
+    credentials: true, 
+  })
+);
 
 // Database connection
 mongoose.connect(process.env.MONGODB_CONNECTION_URL);

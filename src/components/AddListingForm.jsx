@@ -92,7 +92,6 @@ const AddListingForm = () => {
         availableFrom: new Date(Date.now()),
         availableTo: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
       };
-      console.log("Form submitted with data: ", listingData);
       addNewListing(listingData).then(() => {
         toast({
           title: "Listing Created",
@@ -100,11 +99,11 @@ const AddListingForm = () => {
           type: "success",
         });
       });
-      // reset();
-    } catch (error) {
+      reset();
+    } catch (e) {
       toast({
         title: "Error Creating Listing",
-        description: error.message,
+        description: e.response.data.message,
         type: "error",
       });
     } finally {

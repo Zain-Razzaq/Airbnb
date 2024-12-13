@@ -4,45 +4,41 @@ dotenv.config();
 
 export const tokenValidation = (req, res) => {
   const token = req.cookies?.userToken;
-  const refreshToken = req.cookies?.refreshToken;
-  if (!token) return false;
+  if (!token) {
+    return false;
+  }
+
   try {
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    if (decodedToken) return decodedToken;
-    else throw Error();
-  } catch (e) {
-    if (e.name === "TokenExpiredError") {
-      const decodedRefreshToken = jwt.verify(
-        refreshToken,
-        process.env.JWT_SECRET
-      );
-      if (decodedRefreshToken) {
-        const newAccessToken = jwt.sign(
-          { id: decodedRefreshToken.id, isAdmin: decodedRefreshToken.isAdmin },
-          process.env.JWT_SECRET,
-          { expiresIn: "20m" }
-        );
-        res.cookie("userToken", newAccessToken, {
-          httpOnly: true,
-          maxAge: 24 * 60 * 60 * 1000,
-        });
-        return decodedRefreshToken;
-      } else {
-        return false;
-      }
-    }
+    // Verify and decode the token
+    return jwt.verify(token, process.env.JWT_SECRET);
+  } catch (error) {
+    // Handle errors (e.g., token expired, invalid token)
+    return res.status(401).json({ error: "Invalid or expired token" });
   }
 };
 
-const validateUser = (req, res) => {
-  const valid = tokenValidation(req, res);
-  if (valid) {
-    res.status(200).send({
-      success: true,
-    });
-  } else {
-    res.status(401).json({ success: false, message: "Unauthorized Access" });
-  }
+export const validateAdminToken = (req, res) => {
+  const token = tokenValidation(req, res);
+  return token.role == "admin" ? token : false;
 };
 
-export default validateUser;
+export const validateHost = (req, res) => {
+  const token = tokenValidation(req, res);
+  return token.role == "host" ? token : false;
+};
+
+export const validateUser = (req, res) => {
+  const token = tokenValidation(req, res);
+  return token ? token : false;
+};
+
+// const validateUser = (req, res) => {
+//   const valid = tokenValidation(req, res);
+//   if (valid) {
+//     res.status(200).send({
+//       success: true,
+//     });
+//   } else {
+//     res.status(401).json({ success: false, message: "Unauthorized Access" });
+//   }
+// };

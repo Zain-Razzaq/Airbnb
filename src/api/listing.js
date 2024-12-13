@@ -8,6 +8,8 @@ import {
   NEW_LISTINGS_API_URL,
 } from "../apiEndpoints";
 
+axios.defaults.withCredentials = true;
+
 export const getAllListings = () => {
   return axios.get(`${BASE_API_URL}${ALL_LISTINGS_API_URL}`);
 };

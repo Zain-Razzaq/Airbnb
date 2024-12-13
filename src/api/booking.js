@@ -1,6 +1,8 @@
 import axios from "axios";
 import { getCurrentUserData } from "./auth";
 
+axios.defaults.withCredentials = true;
+
 import {
   BASE_API_URL,
   CONFIRM_BOOKING_API_URL,

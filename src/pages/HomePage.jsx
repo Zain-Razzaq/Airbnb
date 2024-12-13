@@ -48,7 +48,7 @@ const HomePage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 p-3">
           {listings.length ? (
             listings.map((listing) => (
-              <ListingCard key={listing.id} {...listing} />
+              <ListingCard key={listing._id} {...listing} />
             ))
           ) : (
             <div className="">No listings found</div>

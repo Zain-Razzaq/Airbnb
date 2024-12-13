@@ -39,24 +39,9 @@ export const register = async (req, res) => {
       }
     );
 
-    const refreshToken = jwt.sign(
-      { id: user.id, role: user.role },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "24h",
-      }
-    );
-
     res.cookie("userToken", JWTToken, {
       httpOnly: true,
       maxAge: 3600000,
-      sameSite: "None",
-      secure: true,
-    });
-
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
       sameSite: "None",
       secure: true,
     });
@@ -94,23 +79,8 @@ export const login = async (req, res) => {
       }
     );
 
-    const refreshToken = jwt.sign(
-      { id: user.id, role: user.role },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "24h",
-      }
-    );
-
     res.cookie("userToken", JWTToken, {
       maxAge: 3600000,
-      sameSite: "None",
-      secure: true,
-    });
-
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
       sameSite: "None",
       secure: true,
     });

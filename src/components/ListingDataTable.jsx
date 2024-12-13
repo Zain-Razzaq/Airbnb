@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 import { FaEllipsisV } from "react-icons/fa"; // Importing the icon
 import {
   flexRender,
@@ -30,6 +31,7 @@ const ListingDataTable = ({ listings: initialListings }) => {
   // State to manage listings
   const [listings, setListings] = useState(initialListings);
   const navigate = useNavigate(); // Initialize navigate function
+  const { toast } = useToast();
 
   // Handle deleting a listing
   const handleDelete = async (listingId) => {
@@ -42,8 +44,12 @@ const ListingDataTable = ({ listings: initialListings }) => {
           prevListings.filter((listing) => listing._id !== listingId)
         );
       })
-      .catch((error) => {
-        console.error("Failed to delete listing:", error);
+      .catch((e) => {
+        toast({
+          title: "Error Occurred",
+          description: e.response.data.message,
+          type: "error",
+        });
       });
   };
 
@@ -73,6 +79,11 @@ const ListingDataTable = ({ listings: initialListings }) => {
     {
       accessorKey: "title",
       header: "Title",
+      cell: ({ row }) => (
+        <div onClick={() => navigate(`/listing/${row.original._id}`)}>
+          <span>{row.getValue("title")}</span>
+        </div>
+      ),
     },
     {
       accessorKey: "location",
@@ -134,11 +145,6 @@ const ListingDataTable = ({ listings: initialListings }) => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  // Handle row click to navigate to the listing details page
-  const handleRowClick = (listingId) => {
-    navigate(`/listing/${listingId}`); // Navigate to the listing detail page
-  };
-
   return (
     <div className="w-full">
       <div className="rounded-md border">
@@ -167,7 +173,6 @@ const ListingDataTable = ({ listings: initialListings }) => {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={() => handleRowClick(row.original._id)} // Handle row click
                   className="cursor-pointer hover:bg-gray-100" // Add hover effect for better UX
                 >
                   {row.getVisibleCells().map((cell) => (

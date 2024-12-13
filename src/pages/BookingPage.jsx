@@ -71,10 +71,10 @@ const BookingPage = () => {
         });
         navigate("/");
       });
-    } catch (error) {
+    } catch (e) {
       toast({
         title: "Error Occurred",
-        description: error.message,
+        description: e.response.data.message,
         type: "error",
       });
     }

@@ -1,20 +1,43 @@
+import { useToast } from "@/hooks/use-toast";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { registerNewUser } from "../../api/auth";
 
 const LoginPage = () => {
-  const handelSubmit = (e) => {
+  const { toast } = useToast();
+  const handelSubmit = async (e) => {
     e.preventDefault();
-    const userData = {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      password: e.target.password.value,
-    };
-    console.log(userData);
-    // send api request to register user
-    const x = registerNewUser(userData);
-    console.log(x);
+    try {
+      const userData = {
+        name: e.target.name.value,
+        email: e.target.email.value,
+        password: e.target.password.value,
+      };
+      // send api request to register user
+      const x = await registerNewUser(userData);
+      if (x) {
+        toast({
+          title: "Success",
+          description: "User registered successfully",
+          type: "success",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to register user",
+          type: "error",
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      toast({
+        title: "Error",
+        description: e.response.data.message,
+        type: "error",
+      });
+    }
   };
 
   return (
