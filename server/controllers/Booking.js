@@ -86,7 +86,7 @@ export const deleteBookingById = async (req, res) => {
     if (!admin) {
       const host = validateHost(req, res);
       if (!host) {
-        res.status(403).send({ message: "Invalid host" });
+        return res.status(403).send({ message: "Invalid host" });
       }
       const booking = await getBookingByIdFromDB(id);
       if (

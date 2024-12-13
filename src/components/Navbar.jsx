@@ -30,11 +30,8 @@ const Navbar = () => {
             >
               Experiences
             </a>
-            <a
-              href="/online-experiences"
-              className="text-gray-600 hover:text-gray-800"
-            >
-              Online Experiences
+            <a href="/bookings" className="text-gray-600 hover:text-gray-800">
+              My Bookings
             </a>
             {
               // Admin-specific links
