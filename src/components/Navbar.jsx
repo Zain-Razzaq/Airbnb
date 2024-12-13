@@ -1,5 +1,3 @@
-import React from "react";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import SearchBar from "@/components/SearchBar";
 
 const Navbar = () => {
-  const userRole = JSON.parse(localStorage.getItem("user")).role;
+  const userRole = JSON.parse(localStorage.getItem("user"))?.role || undefined;
 
   return (
     <nav className="bg-white shadow-md p-4">

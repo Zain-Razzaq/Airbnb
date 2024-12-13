@@ -33,7 +33,7 @@ const ListingPage = () => {
   }
 
   return (
-    <div className="flex justify-center m-8">
+    <div className="flex flex-col justify-center m-8  lg:flex-row">
       <div>
         <img
           src={listing.image}

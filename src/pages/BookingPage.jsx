@@ -74,7 +74,7 @@ const BookingPage = () => {
     } catch (e) {
       toast({
         title: "Error Occurred",
-        description: e.response.data.message,
+        description: e.response?.data.message,
         type: "error",
       });
     }
